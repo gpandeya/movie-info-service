@@ -13,8 +13,18 @@ public class MovieInfoController {
 
 	@GetMapping("/{movieId}")
 	public Movie getMovie(@PathVariable("movieId") String movieId){
+		if(("110").equalsIgnoreCase(movieId)) {
+			return new Movie(movieId,"Lion king");
+		}
 		
-		return new Movie(movieId,"Test Movie");
+		if(("120").equalsIgnoreCase(movieId)) {
+			return new Movie(movieId,"Toy Story");
+		}
+		if(("130").equalsIgnoreCase(movieId)) {
+			return new Movie(movieId,"Frozen");
+		}
+		else
+			return new Movie(movieId,"Test Movie");
 		
 	}
 }
