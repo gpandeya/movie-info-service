@@ -1,30 +1,41 @@
 package com.gp.rnd.movieinfoservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.gp.rnd.movieinfoservice.entity.Movie;
+import com.gp.rnd.movieinfoservice.entity.MovieSummary;
 
 @RestController
 @RequestMapping("/movies")
 public class MovieInfoController {
+	
+	
+	@Value("${api.key}")
+	private String apiKey;
+	
+	@Value("${api.baseurl}")
+	private String baseUrl;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 
 	@GetMapping("/{movieId}")
 	public Movie getMovie(@PathVariable("movieId") String movieId){
-		if(("110").equalsIgnoreCase(movieId)) {
-			return new Movie(movieId,"Lion king");
-		}
 		
-		if(("120").equalsIgnoreCase(movieId)) {
-			return new Movie(movieId,"Toy Story");
-		}
-		if(("130").equalsIgnoreCase(movieId)) {
-			return new Movie(movieId,"Frozen");
-		}
-		else
-			return new Movie(movieId,"Test Movie");
+		MovieSummary summary = 
+				restTemplate.getForObject(baseUrl+movieId+"?api_key="+apiKey,MovieSummary.class);
+		
+		Movie movie = new Movie(movieId,summary.getTitle(),summary.getOverview());
+		
+		return movie;
+		
 		
 	}
 }
