@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.gp.rnd.movieinfoservice.config.MovieDBConfig;
 import com.gp.rnd.movieinfoservice.entity.Movie;
 import com.gp.rnd.movieinfoservice.entity.MovieSummary;
 
@@ -16,11 +17,17 @@ import com.gp.rnd.movieinfoservice.entity.MovieSummary;
 public class MovieInfoController {
 	
 	
-	@Value("${api.key}")
-	private String apiKey;
+//	@Value("${api.key}")
+//	private String apiKey;
+//	
+//	@Value("${api.baseurl}")
+//	private String baseUrl;
 	
-	@Value("${api.baseurl}")
-	private String baseUrl;
+	@Value("${application.description}")
+	private String welcomeMessage;
+	
+	@Autowired
+	private MovieDBConfig MovieDBConfig;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -30,12 +37,16 @@ public class MovieInfoController {
 	public Movie getMovie(@PathVariable("movieId") String movieId){
 		
 		MovieSummary summary = 
-				restTemplate.getForObject(baseUrl+movieId+"?api_key="+apiKey,MovieSummary.class);
+				restTemplate.getForObject(MovieDBConfig.getBaseUrl()+movieId+"?api_key="+MovieDBConfig.getKey(),MovieSummary.class);
 		
 		Movie movie = new Movie(movieId,summary.getTitle(),summary.getOverview());
 		
-		return movie;
+		return movie;	
 		
-		
+	}
+	
+	@GetMapping("/greeting")
+	public String greetUser() {
+		return welcomeMessage;
 	}
 }
