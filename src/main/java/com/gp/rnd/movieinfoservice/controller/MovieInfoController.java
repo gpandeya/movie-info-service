@@ -23,7 +23,7 @@ public class MovieInfoController {
 //	@Value("${api.baseurl}")
 //	private String baseUrl;
 	
-	@Value("${application.description}")
+	@Value("${app.description}")
 	private String welcomeMessage;
 	
 	@Autowired
