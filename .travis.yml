@@ -1,0 +1,14 @@
+dist: trusty
+language: java
+jdk: openjdk8
+before_install:
+  - chmod +x mvnw
+deploy:
+   provider: cloudfoundry
+   username: gyanesh.pandeya@gmail.com
+   password: Pivotal@123
+   api: https://api.run.pivotal.io
+   organization: gp-rnd
+   space: dev
+   manifest: manifest.yml       # (optional)  Defaults to manifest.yml.
+   app_name: movie-info-service               # (optional)

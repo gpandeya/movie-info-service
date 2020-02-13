@@ -4,9 +4,6 @@ app:
 
 server.port: 7082
 
-moviedb:
-  baseurl: http://api.themoviedb.org/3/movie/
-  key: 41e19c74b05cc1baaa2038ac60abe0a7
 
 management.endpoints.web.exposure.include: "*"
 
@@ -14,3 +11,10 @@ spring:
   profiles:
     active:
     - dev
+  application:
+    name: movie-info-service
+  cloud:
+    config:
+      uri: 
+      - https://github.com/gpandeya/confg-server
+
