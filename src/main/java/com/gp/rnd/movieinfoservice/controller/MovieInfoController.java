@@ -51,4 +51,9 @@ public class MovieInfoController {
 	public String greetUser() {
 		return welcomeMessage;
 	}
+	
+	@GetMapping("/test-api")
+	public String welcomeMessage() {
+		return "Hello World! Deployed from pipeline";
+	}
 }
